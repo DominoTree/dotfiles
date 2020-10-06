@@ -1,0 +1,7 @@
+[credential]
+	helper = store
+[user]
+	name = Nick Price
+	email = nick@spun.io
+[core]
+	excludesfile = ~/.gitignore_global
