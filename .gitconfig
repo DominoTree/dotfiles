@@ -5,3 +5,7 @@
 	email = nick@spun.io
 [core]
 	excludesfile = ~/.gitignore_global
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
