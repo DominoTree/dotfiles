@@ -1,0 +1,37 @@
+{
+	"font_face": "Fira Code",
+	"font_size": 10,
+	"font_options": [
+		"dlig",
+	],
+	"theme": "Adaptive.sublime-theme",
+	"color_scheme": "Packages/Solarized Color Scheme/Solarized (dark).sublime-color-scheme",
+	"highlight_line": true,
+	"draw_white_space": [
+		"leading",
+		"selection",
+		"trailing",
+		"isolated",
+	],
+	"trim_trailing_white_space_on_save": "all",
+	"ensure_newline_at_eof_on_save": true,
+	"show_line_endings": true,
+	"show_encoding": true,
+	"hardware_acceleration": "opengl",
+	"close_windows_when_empty": true,
+
+	"vintageous_handle_keys": {
+		"<C-v>": true,
+		"i_<C-v>": false,
+	},
+	"vintageous_i_escape_jj": true,
+	"vintageous_use_sys_clipboard": true,
+	"neovintageous_build_version": 11100,
+
+	"ignored_packages":
+	[
+		"Six",
+		"Vintage",
+		"Vintageous",
+	],
+}
