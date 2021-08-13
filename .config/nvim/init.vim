@@ -19,14 +19,14 @@ call plug#begin()
         Plug 'tiagofumo/vim-nerdtree-syntax-highlight' "required by devicons when used with nerdtree
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
+        Plug 'edkolev/tmuxline.vim'
 
         Plug 'nvim-lua/popup.nvim' "required by telescope
         Plug 'nvim-lua/plenary.nvim' "required by telescope
         Plug 'nvim-telescope/telescope.nvim'
 call plug#end()
 
-cd c:\users\nxp153\Work
-
+set termguicolors
 set mouse=a
 "set expandtab
 "set autoindent
@@ -45,7 +45,7 @@ nnoremap <C-g> <Cmd>Telescope live_grep<CR>
 "get over using this lol
 nnoremap <leader>gg <Cmd>Telescope live_grep<CR>
 
-nnoremap <C-`> <Cmd>bo 20new term://cmd.exe<CR><Cmd>startinsert<CR>
+nnoremap <C-`> <Cmd>bo 20new term://zsh<CR><Cmd>startinsert<CR>
 tnoremap <C-`> <Cmd>close!<CR>
 
 nnoremap <leader>gs <Cmd>Git<CR>
