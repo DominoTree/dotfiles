@@ -6,7 +6,7 @@ set nocompatible
 set number
 set relativenumber
 set term=xterm
-"set termguicolors
+set termguicolors
 set ttymouse=xterm2
 
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -32,11 +32,12 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'rust-lang/rust.vim'
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 
 Plug 'sheerun/vim-polyglot'
 
-Plug 'ycm-core/YouCompleteMe'
+"Plug 'ycm-core/YouCompleteMe'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -46,11 +47,15 @@ let &t_EI = "\<Esc>[2 q"
 
 set background=dark
 let g:solarized_term_italics = 1
-colorscheme solarized8_flat
+colorscheme solarized8
 
 let g:airline_theme='solarized'
 let g:airline_powerline_fonts = 1
 let g:tmuxline_powerline_separators = 1
 
+let g:ale_c_parse_makefile = 1
+let b:ale_fixers = {'c': ['gcc']}
+
 map <C-p> :FZF<CR>
 nnoremap <C-e> :NERDTreeToggle<CR>
+
