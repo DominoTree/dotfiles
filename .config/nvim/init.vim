@@ -4,7 +4,7 @@ call plug#begin()
         Plug 'skywind3000/asyncrun.vim'
         Plug 'sheerun/vim-polyglot'
         Plug 'neovim/nvim-lspconfig'
-        "Plug 'neoclide/coc.nvim'
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
         Plug 'lewis6991/gitsigns.nvim'
         Plug 'lukas-reineke/indent-blankline.nvim'
@@ -67,11 +67,14 @@ let g:strip_whitespace_on_save=1
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
+autocmd BufWritePre *.tf lua vim.lsp.buf.formatting()
+
 ":so $MYVIMRC
 ":e $MYVIMRC
 
 lua <<EOF
 require('gitsigns').setup()
 require'lspconfig'.rls.setup{}
+require'lspconfig'.terraformls.setup{}
 EOF
 
