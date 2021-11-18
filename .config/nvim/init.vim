@@ -5,6 +5,7 @@ call plug#begin()
         Plug 'sheerun/vim-polyglot'
         Plug 'neovim/nvim-lspconfig'
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'leafOfTree/vim-svelte-plugin'
 
         Plug 'lewis6991/gitsigns.nvim'
         Plug 'lukas-reineke/indent-blankline.nvim'
