@@ -10,6 +10,7 @@ call plug#begin()
         Plug 'lewis6991/gitsigns.nvim'
         Plug 'lukas-reineke/indent-blankline.nvim'
         Plug 'ntpeters/vim-better-whitespace'
+        Plug 'editorconfig/editorconfig-vim'
 
         Plug 'lifepillar/vim-solarized8'
         Plug 'scrooloose/nerdtree'
