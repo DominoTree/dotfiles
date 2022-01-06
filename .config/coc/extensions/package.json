@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "coc-json": ">=1.4.0",
-    "coc-rust-analyzer": ">=0.57.0",
+    "coc-rust-analyzer": ">=0.59.0",
     "coc-svelte": ">=0.4.1"
   }
 }

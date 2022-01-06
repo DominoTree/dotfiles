@@ -26,6 +26,7 @@ call plug#begin()
         Plug 'nvim-lua/popup.nvim' "required by telescope
         Plug 'nvim-lua/plenary.nvim' "required by telescope
         Plug 'nvim-telescope/telescope.nvim'
+        Plug 'wakatime/vim-wakatime'
 call plug#end()
 
 set termguicolors
