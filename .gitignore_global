@@ -5,3 +5,7 @@
 *.pyc
 launch.json
 venv
+.DS_Store
+*.iml
+.config/nvim/plugged
+node_modules
