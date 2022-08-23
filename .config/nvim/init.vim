@@ -2,10 +2,14 @@ call plug#begin()
         Plug 'tpope/vim-rhubarb'
         Plug 'tpope/vim-fugitive'
         Plug 'skywind3000/asyncrun.vim'
-        Plug 'sheerun/vim-polyglot'
-        Plug 'neovim/nvim-lspconfig'
+
+        Plug 'othree/html5.vim'
+        Plug 'pangloss/vim-javascript'
+        Plug 'evanleck/vim-svelte', {'branch': 'main'}
+        "Plug 'leafOfTree/vim-svelte-plugin'
+        Plug 'rust-lang/rust.vim'
+
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        Plug 'leafOfTree/vim-svelte-plugin'
 
         Plug 'lewis6991/gitsigns.nvim'
         Plug 'lukas-reineke/indent-blankline.nvim'
@@ -53,11 +57,15 @@ tnoremap <C-`> <Cmd>close!<CR>
 
 nnoremap <leader>gs <Cmd>Git<CR>
 nnoremap <leader>ga <Cmd>Git add @%<CR>
+nnoremap <leader>gc :Git commit -m ""<Left>
 nnoremap <leader>gA <Cmd>Git add .<CR>
 nnoremap <leader>gf <Cmd>Git fetch<CR>
 nnoremap <leader>gy <Cmd>Git push<CR>
 nnoremap <leader>gb <Cmd>GBrowse<CR>
 nnoremap <leader>gd <Cmd>Gvdiffsplit<CR>
+
+nnoremap <leader>bl <Cmd>set background=light<CR>
+nnoremap <leader>bd <Cmd>set background=dark<CR>
 
 set background=dark
 colorscheme solarized8
@@ -65,6 +73,7 @@ colorscheme solarized8
 let g:airline_powerline_fonts=1
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
+let g:rustfmt_autosave=1
 
 " Start NERDTree when Vim is started without file arguments.
 autocmd StdinReadPre * let s:std_in=1
@@ -77,7 +86,5 @@ autocmd BufWritePre *.tf lua vim.lsp.buf.formatting()
 
 lua <<EOF
 require('gitsigns').setup()
-require'lspconfig'.rls.setup{}
-require'lspconfig'.terraformls.setup{}
 EOF
 
