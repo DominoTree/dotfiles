@@ -11,5 +11,9 @@
 			"settings": {}
 		}
   },
-  "svelte.enable-ts-plugin": true
+  "coc.preferences.useQuickfixForLocations": true,
+  "svelte.enable-ts-plugin": true,
+  "sql.database": "postgresql",
+  "sqlfluff.enable": false,
+  "sqlfluff.dialect": "postgres"
 }
