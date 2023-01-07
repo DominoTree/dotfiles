@@ -3,11 +3,8 @@ call plug#begin()
         Plug 'tpope/vim-fugitive'
         Plug 'skywind3000/asyncrun.vim'
 
-        Plug 'othree/html5.vim'
-        Plug 'pangloss/vim-javascript'
-        Plug 'evanleck/vim-svelte', {'branch': 'main'}
-        "Plug 'leafOfTree/vim-svelte-plugin'
-        Plug 'rust-lang/rust.vim'
+	Plug 'sheerun/vim-polyglot'
+	Plug 'pantharshit00/vim-prisma'
 
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -22,7 +19,6 @@ call plug#begin()
 
         "patched fonts at https://www.nerdfonts.com
         Plug 'ryanoasis/vim-devicons'
-        Plug 'tiagofumo/vim-nerdtree-syntax-highlight' "required by devicons when used with nerdtree
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
         Plug 'edkolev/tmuxline.vim'
@@ -30,7 +26,7 @@ call plug#begin()
         Plug 'nvim-lua/popup.nvim' "required by telescope
         Plug 'nvim-lua/plenary.nvim' "required by telescope
         Plug 'nvim-telescope/telescope.nvim'
-        Plug 'wakatime/vim-wakatime'
+	Plug 'phaazon/hop.nvim'
 call plug#end()
 
 set termguicolors
@@ -86,5 +82,6 @@ autocmd BufWritePre *.tf lua vim.lsp.buf.formatting()
 
 lua <<EOF
 require('gitsigns').setup()
+require('hop').setup()
 EOF
 
