@@ -3,8 +3,8 @@ call plug#begin()
         Plug 'tpope/vim-fugitive'
         Plug 'skywind3000/asyncrun.vim'
 
-	Plug 'sheerun/vim-polyglot'
-	Plug 'pantharshit00/vim-prisma'
+        Plug 'sheerun/vim-polyglot'
+        Plug 'pantharshit00/vim-prisma'
 
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -26,9 +26,10 @@ call plug#begin()
         Plug 'nvim-lua/popup.nvim' "required by telescope
         Plug 'nvim-lua/plenary.nvim' "required by telescope
         Plug 'nvim-telescope/telescope.nvim'
-	Plug 'phaazon/hop.nvim'
+        Plug 'phaazon/hop.nvim'
 call plug#end()
 
+let g:coc_global_extensions = [ 'coc-css', 'coc-eslint', 'coc-html', 'coc-jedi', 'coc-json', 'coc-prettier', 'coc-prisma', 'coc-rust-analyzer', 'coc-svelte', '@yaegassy/coc-tailwindcss3', 'coc-toml', 'coc-tsserver', 'coc-yaml' ]
 set termguicolors
 set mouse=a
 "set expandtab
@@ -52,7 +53,7 @@ nnoremap <C-`> <Cmd>bo 20new term://zsh<CR><Cmd>startinsert<CR>
 tnoremap <C-`> <Cmd>close!<CR>
 
 nnoremap <leader>gs <Cmd>Git<CR>
-nnoremap <leader>ga <Cmd>Git add @%<CR>
+nnoremap <leader>ga <Cmd>Git add %<CR>
 nnoremap <leader>gc :Git commit -m ""<Left>
 nnoremap <leader>gA <Cmd>Git add .<CR>
 nnoremap <leader>gf <Cmd>Git fetch<CR>
@@ -76,6 +77,11 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 autocmd BufWritePre *.tf lua vim.lsp.buf.formatting()
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 ":so $MYVIMRC
 ":e $MYVIMRC
