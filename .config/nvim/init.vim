@@ -1,3 +1,4 @@
+
 call plug#begin()
         Plug 'tpope/vim-rhubarb'
         Plug 'tpope/vim-fugitive'
@@ -71,6 +72,8 @@ let g:airline_powerline_fonts=1
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
 let g:rustfmt_autosave=1
+let g:vim_svelte_plugin_load_full_syntax = 1
+let g:vim_svelte_plugin_use_typescript = 1
 
 " Start NERDTree when Vim is started without file arguments.
 autocmd StdinReadPre * let s:std_in=1
