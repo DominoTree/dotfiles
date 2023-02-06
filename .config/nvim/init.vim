@@ -35,7 +35,7 @@ set termguicolors
 set mouse=a
 "set expandtab
 "set autoindent
-set relativenumber
+set number
 set cursorline
 set ff=unix
 
@@ -68,6 +68,7 @@ nnoremap <leader>bd <Cmd>set background=dark<CR>
 set background=dark
 colorscheme solarized8
 
+let NERDTreeShowHidden=1
 let g:airline_powerline_fonts=1
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
