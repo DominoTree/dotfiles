@@ -1,4 +1,3 @@
-
 call plug#begin()
         Plug 'tpope/vim-rhubarb'
         Plug 'tpope/vim-fugitive'
@@ -13,6 +12,10 @@ call plug#begin()
         Plug 'lukas-reineke/indent-blankline.nvim'
         Plug 'ntpeters/vim-better-whitespace'
         Plug 'editorconfig/editorconfig-vim'
+
+        Plug 'neovim/nvim-lspconfig'
+        Plug 'jose-elias-alvarez/null-ls.nvim'
+        Plug 'MunifTanjim/prettier.nvim'
 
         Plug 'lifepillar/vim-solarized8'
         Plug 'scrooloose/nerdtree'
@@ -35,7 +38,7 @@ set termguicolors
 set mouse=a
 "set expandtab
 "set autoindent
-set relativenumber
+set number
 set cursorline
 set ff=unix
 
@@ -56,7 +59,7 @@ tnoremap <C-`> <Cmd>close!<CR>
 nnoremap <leader>gs <Cmd>Git<CR>
 nnoremap <leader>ga <Cmd>Git add %<CR>
 nnoremap <leader>gc :Git commit -m ""<Left>
-nnoremap <leader>gA <Cmd>Git add .<CR>
+nnoremap <leader>GA <Cmd>Git add .<CR>
 nnoremap <leader>gf <Cmd>Git fetch<CR>
 nnoremap <leader>gy <Cmd>Git push<CR>
 nnoremap <leader>gb <Cmd>GBrowse<CR>
@@ -68,6 +71,7 @@ nnoremap <leader>bd <Cmd>set background=dark<CR>
 set background=dark
 colorscheme solarized8
 
+let NERDTreeShowHidden=1
 let g:airline_powerline_fonts=1
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
@@ -92,5 +96,38 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 lua <<EOF
 require('gitsigns').setup()
 require('hop').setup()
-EOF
 
+local null_ls = require("null-ls")
+
+local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+local event = "BufWritePre" -- or "BufWritePost"
+local async = event == "BufWritePost"
+
+null_ls.setup({
+  on_attach = function(client, bufnr)
+    if client.supports_method("textDocument/formatting") then
+      vim.keymap.set("n", "<Leader>f", function()
+        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      end, { buffer = bufnr, desc = "[lsp] format" })
+
+      -- format on save
+      vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+      vim.api.nvim_create_autocmd(event, {
+        buffer = bufnr,
+        group = group,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr, async = async })
+        end,
+        desc = "[lsp] format on save",
+      })
+    end
+
+    if client.supports_method("textDocument/rangeFormatting") then
+      vim.keymap.set("x", "<Leader>f", function()
+        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      end, { buffer = bufnr, desc = "[lsp] format" })
+    end
+  end,
+})
+
+EOF
