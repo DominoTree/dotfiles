@@ -18,11 +18,12 @@ vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappin
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.termguicolors = true
-vim.opt.background = 'light'
+vim.opt.background = 'dark'
 vim.wo.signcolumn = 'yes'
 
 
 require('lazy').setup({
+  {'nvim-treesitter/nvim-treesitter'},
   {'tanvirtin/vgit.nvim'},
   {'edkolev/tmuxline.vim'},
   {'nvim-lualine/lualine.nvim'},
@@ -58,6 +59,14 @@ require('mason-lspconfig').setup({
   automatic_installation = true,
 })
 
+-- tree-sitter
+require('nvim-treesitter.configs').setup({
+  auto_install = true,
+  highlight = {
+    enable = true,
+  },
+})
+
 -- coq autocompletion
 vim.g.coq_settings = {
   auto_start = "shut-up",
@@ -87,7 +96,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
 require('lualine').setup({
   options = {
-    theme = 'solarized_light',
+    theme = 'solarized_dark',
   },
 })
 
@@ -109,7 +118,7 @@ local chadtree_settings = {
     show_hidden = true,
   },
   theme = {
-    text_colour_set = "solarized_light",
+    text_colour_set = "solarized_dark",
   },
 }
 vim.api.nvim_set_var("chadtree_settings", chadtree_settings)
