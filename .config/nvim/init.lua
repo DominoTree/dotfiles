@@ -18,12 +18,16 @@ vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappin
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.termguicolors = true
+vim.opt.background = 'light'
+vim.wo.signcolumn = 'yes'
+
 
 require('lazy').setup({
+  {'tanvirtin/vgit.nvim'},
   {'edkolev/tmuxline.vim'},
   {'nvim-lualine/lualine.nvim'},
   {'tjdevries/colorbuddy.nvim'}, -- required for neosolarized
-  {'svrana/neosolarized.nvim'},
+  {'overcache/NeoSolarized'},
   {'ms-jpq/chadtree', branch = 'chad'},
   {'nvim-tree/nvim-web-devicons'}, -- used by chadtree
   {'nvim-lua/plenary.nvim'}, -- required by telescope
@@ -34,11 +38,7 @@ require('lazy').setup({
   {'ms-jpq/coq_nvim', branch = 'coq'},
 })
 
--- our theme!
-require('neosolarized').setup({
-  comment_italics = true,
-  background_set = true,
-})
+vim.cmd [[colorscheme NeoSolarized]]
 
 -- lspconfigs
 local lspconfig = require('lspconfig')
@@ -87,15 +87,17 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
 require('lualine').setup({
   options = {
-    theme = 'solarized_dark',
+    theme = 'solarized_light',
   },
 })
 
+require('vgit').setup()
+
 -- start Tmuxline
-vim.g.tmuxline_theme = "vim_statusline_1"
-vim.api.nvim_create_autocmd("VimEnter", {
-    command = "Tmuxline",
-})
+--vim.g.tmuxline_theme = "vim_statusline_1"
+--vim.api.nvim_create_autocmd("VimEnter", {
+    --command = "Tmuxline",
+--})
 
 local chadtree_settings = {
   view = {
@@ -107,7 +109,7 @@ local chadtree_settings = {
     show_hidden = true,
   },
   theme = {
-    text_colour_set = "nerdtree_syntax_dark",
+    text_colour_set = "solarized_light",
   },
 }
 vim.api.nvim_set_var("chadtree_settings", chadtree_settings)
