@@ -29,35 +29,23 @@ require('lazy').setup({
   {'nvim-lualine/lualine.nvim'},
   {'tjdevries/colorbuddy.nvim'}, -- required for neosolarized
   {'overcache/NeoSolarized'},
-  {'ms-jpq/chadtree', branch = 'chad'},
-  {'nvim-tree/nvim-web-devicons'}, -- used by chadtree
+  {'nvim-tree/nvim-web-devicons'},
+  {'nvim-tree/nvim-tree.lua'},
   {'nvim-lua/plenary.nvim'}, -- required by telescope
   {'nvim-telescope/telescope.nvim', tag = '0.1.1'},
   {'williamboman/mason.nvim', run = ':MasonUpdate'},
   {'williamboman/mason-lspconfig.nvim'},
+  {'hrsh7th/cmp-buffer'},
+  {'hrsh7th/cmp-path'},
+  {'hrsh7th/cmp-cmdline'},
+  {'hrsh7th/nvim-cmp'},
+  {'L3MON4D3/LuaSnip'},
+  {'saadparwaiz1/cmp_luasnip'},
   {'neovim/nvim-lspconfig'},
-  {'ms-jpq/coq_nvim', branch = 'coq'},
+  {'hrsh7th/cmp-nvim-lsp'},
 })
 
 vim.cmd [[colorscheme NeoSolarized]]
-
--- lspconfigs
-local lspconfig = require('lspconfig')
-lspconfig.cssls.setup {}
-lspconfig.html.setup {}
-lspconfig.jsonls.setup {}
-lspconfig.lua_ls.setup {}
-lspconfig.prismals.setup {}
-lspconfig.rust_analyzer.setup {}
-lspconfig.svelte.setup {}
-lspconfig.terraformls.setup {}
-lspconfig.tsserver.setup {}
-
--- install and update language servers
-require('mason').setup()
-require('mason-lspconfig').setup({
-  automatic_installation = true,
-})
 
 -- tree-sitter
 require('nvim-treesitter.configs').setup({
@@ -104,32 +92,52 @@ require('nvim-treesitter.configs').setup({
   },
 })
 
--- coq autocompletion
-vim.g.coq_settings = {
-  auto_start = "shut-up",
-  clients = {
-    lsp = {
-      enabled = true,
-      --resolve_timeout = 2000,
+local cmp = require('cmp')
+cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      end,
     },
-    tree_sitter = {
-      enabled = true,
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
     },
-    snippets = {
-      enabled = false,
-    },
-  },
-  --limits = {
-    --completion_auto_timeout = 2000,
-    --completion_manual_timeout = 5000,
-  --}
-}
-local coq = require('coq')
-
--- workaround for COQ not autostarting for some reason
-vim.api.nvim_create_autocmd("VimEnter", {
-    command = "COQnow -s",
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' }, -- For luasnip users.
+      }, {
+      { name = 'buffer' },
+    })
 })
+
+-- lspconfigs
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require('lspconfig')
+lspconfig.cssls.setup {capabilities = capabilities}
+lspconfig.html.setup {capabilities = capabilities}
+lspconfig.jsonls.setup {capabilities = capabilities}
+lspconfig.lua_ls.setup {capabilities = capabilities}
+lspconfig.prismals.setup {capabilities = capabilities}
+lspconfig.rust_analyzer.setup {capabilities = capabilities}
+lspconfig.svelte.setup {capabilities = capabilities}
+lspconfig.terraformls.setup {capabilities = capabilities}
+lspconfig.tsserver.setup {capabilities = capabilities}
+
+-- install and update language servers
+require('mason').setup()
+require('mason-lspconfig').setup({
+  automatic_installation = true,
+})
+
 
 require('lualine').setup({
   options = {
@@ -145,25 +153,12 @@ require('vgit').setup()
     --command = "Tmuxline",
 --})
 
-local chadtree_settings = {
-  view = {
-    window_options = {
-      signcolumn = "yes",
-    },
-  },
-  options = {
-    show_hidden = true,
-  },
-  theme = {
-    text_colour_set = "solarized_dark",
-  },
-}
-vim.api.nvim_set_var("chadtree_settings", chadtree_settings)
+require("nvim-tree").setup()
 
 require('telescope').setup()
 local telescope_builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<C-p>', telescope_builtin.find_files, {})
 vim.keymap.set('n', '<C-g>', telescope_builtin.live_grep, {})
-vim.keymap.set('n', '<C-e>', ':CHADopen<cr>', {})
+vim.keymap.set('n', '<C-e>', ':NvimTreeToggle<cr>', {})
 
