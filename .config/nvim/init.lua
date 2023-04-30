@@ -14,20 +14,20 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
--- vim.opt.cursorcolumn = true
+vim.g.rustfmt_autosave = a 
+vim.opt.background = 'dark'
+vim.opt.cursorcolumn = false
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.termguicolors = true
-vim.opt.background = 'dark'
 vim.wo.signcolumn = 'yes'
-
 
 require('lazy').setup({
   {'nvim-treesitter/nvim-treesitter'},
   {'lewis6991/gitsigns.nvim'},
+  {'lukas-reineke/indent-blankline.nvim'},
   {'edkolev/tmuxline.vim'},
   {'nvim-lualine/lualine.nvim'},
-  {'feline-nvim/feline.nvim'},
   {'catppuccin/nvim', name = 'catppuccin'},
   {'tjdevries/colorbuddy.nvim'}, -- required for neosolarized
   {'rebelot/kanagawa.nvim'},
@@ -97,6 +97,17 @@ require('nvim-treesitter.configs').setup({
   },
 })
 
+vim.opt.list = true
+vim.opt.listchars:append "space:⋅"
+vim.opt.listchars:append "tab:→ "
+vim.opt.listchars:append "eol:↴"
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
+
 local cmp = require('cmp')
 cmp.setup({
     snippet = {
@@ -110,10 +121,6 @@ cmp.setup({
       documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = cmp.config.sources({
@@ -121,6 +128,8 @@ cmp.setup({
       { name = 'luasnip' }, -- For luasnip users.
       }, {
       { name = 'buffer' },
+      }, {
+      { name = 'path' },
     })
 })
 
@@ -143,21 +152,14 @@ require('mason-lspconfig').setup({
   automatic_installation = true,
 })
 
--- require('feline').setup()
--- require('feline').winbar.setup()
-
 require('lualine').setup({})
---   options = {
---     theme = 'solarized_dark',
---   },
--- })
 
 require('gitsigns').setup()
 
 -- start Tmuxline
 --vim.g.tmuxline_theme = "vim_statusline_1"
 --vim.api.nvim_create_autocmd("VimEnter", {
-    --command = "Tmuxline",
+    --command = "Tmuxline jellybeans",
 --})
 
 require("nvim-tree").setup()
