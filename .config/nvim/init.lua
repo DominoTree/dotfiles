@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
-vim.g.rustfmt_autosave = a 
+vim.g.rustfmt_autosave = true
 vim.opt.background = 'dark'
 vim.opt.cursorcolumn = false
 vim.opt.cursorline = true
