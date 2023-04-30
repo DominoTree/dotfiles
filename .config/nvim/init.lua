@@ -19,6 +19,8 @@ vim.opt.background = 'dark'
 vim.opt.cursorcolumn = false
 vim.opt.cursorline = true
 vim.opt.number = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.wo.signcolumn = 'yes'
 
