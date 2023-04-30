@@ -28,10 +28,7 @@ require('lazy').setup({
   {'lukas-reineke/indent-blankline.nvim'},
   {'edkolev/tmuxline.vim'},
   {'nvim-lualine/lualine.nvim'},
-  {'catppuccin/nvim', name = 'catppuccin'},
-  {'tjdevries/colorbuddy.nvim'}, -- required for neosolarized
   {'rebelot/kanagawa.nvim'},
-  {'overcache/NeoSolarized'},
   {'nvim-tree/nvim-web-devicons'},
   {'nvim-tree/nvim-tree.lua'},
   {'nvim-lua/plenary.nvim'}, -- required by telescope
@@ -47,8 +44,6 @@ require('lazy').setup({
   {'neovim/nvim-lspconfig'},
   {'hrsh7th/cmp-nvim-lsp'},
 })
-
-vim.g.neosolarized_italic = 1
 
 vim.cmd("colorscheme kanagawa")
 
