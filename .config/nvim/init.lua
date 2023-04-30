@@ -24,10 +24,13 @@ vim.wo.signcolumn = 'yes'
 
 require('lazy').setup({
   {'nvim-treesitter/nvim-treesitter'},
-  {'tanvirtin/vgit.nvim'},
+  {'lewis6991/gitsigns.nvim'},
   {'edkolev/tmuxline.vim'},
   {'nvim-lualine/lualine.nvim'},
+  {'feline-nvim/feline.nvim'},
+  {'catppuccin/nvim', name = 'catppuccin'},
   {'tjdevries/colorbuddy.nvim'}, -- required for neosolarized
+  {'rebelot/kanagawa.nvim'},
   {'overcache/NeoSolarized'},
   {'nvim-tree/nvim-web-devicons'},
   {'nvim-tree/nvim-tree.lua'},
@@ -45,7 +48,9 @@ require('lazy').setup({
   {'hrsh7th/cmp-nvim-lsp'},
 })
 
-vim.cmd [[colorscheme NeoSolarized]]
+vim.g.neosolarized_italic = 1
+
+vim.cmd("colorscheme kanagawa")
 
 -- tree-sitter
 require('nvim-treesitter.configs').setup({
@@ -138,14 +143,16 @@ require('mason-lspconfig').setup({
   automatic_installation = true,
 })
 
+-- require('feline').setup()
+-- require('feline').winbar.setup()
 
-require('lualine').setup({
-  options = {
-    theme = 'solarized_dark',
-  },
-})
+require('lualine').setup({})
+--   options = {
+--     theme = 'solarized_dark',
+--   },
+-- })
 
-require('vgit').setup()
+require('gitsigns').setup()
 
 -- start Tmuxline
 --vim.g.tmuxline_theme = "vim_statusline_1"
