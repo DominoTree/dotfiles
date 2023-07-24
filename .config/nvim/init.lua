@@ -22,6 +22,7 @@ vim.opt.number = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
+vim.opt.updatetime = 1000
 vim.wo.signcolumn = 'yes'
 
 require('lazy').setup({
@@ -135,9 +136,11 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 lspconfig.cssls.setup {capabilities = capabilities}
 lspconfig.html.setup {capabilities = capabilities}
+--lspconfig.jedi_language_server.setup {capabilities = capabilities}
 lspconfig.jsonls.setup {capabilities = capabilities}
 lspconfig.lua_ls.setup {capabilities = capabilities}
 lspconfig.prismals.setup {capabilities = capabilities}
+lspconfig.pylsp.setup {capabilities = capabilities}
 lspconfig.rust_analyzer.setup {capabilities = capabilities}
 lspconfig.svelte.setup {capabilities = capabilities}
 lspconfig.terraformls.setup {capabilities = capabilities}
@@ -167,4 +170,9 @@ local telescope_builtin = require('telescope.builtin')
 vim.keymap.set('n', '<C-p>', telescope_builtin.find_files, {})
 vim.keymap.set('n', '<C-g>', telescope_builtin.live_grep, {})
 vim.keymap.set('n', '<C-e>', ':NvimTreeToggle<cr>', {})
+
+
+vim.api.nvim_create_autocmd("CursorHold", {
+	callback = function() vim.diagnostic.open_float() end
+})
 
