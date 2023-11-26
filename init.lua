@@ -35,7 +35,7 @@ require('lazy').setup({
   {'nvim-tree/nvim-web-devicons'},
   {'nvim-tree/nvim-tree.lua'},
   {'nvim-lua/plenary.nvim'}, -- required by telescope
-  {'nvim-telescope/telescope.nvim', tag = '0.1.4'},
+  {'nvim-telescope/telescope.nvim'},
   {'williamboman/mason.nvim', run = ':MasonUpdate'},
   {'williamboman/mason-lspconfig.nvim'},
   {'hrsh7th/cmp-buffer'},
