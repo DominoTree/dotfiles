@@ -35,7 +35,7 @@ require('lazy').setup({
   {'nvim-tree/nvim-web-devicons'},
   {'nvim-tree/nvim-tree.lua'},
   {'nvim-lua/plenary.nvim'}, -- required by telescope
-  {'nvim-telescope/telescope.nvim', tag = '0.1.1'},
+  {'nvim-telescope/telescope.nvim'},
   {'williamboman/mason.nvim', run = ':MasonUpdate'},
   {'williamboman/mason-lspconfig.nvim'},
   {'hrsh7th/cmp-buffer'},
@@ -100,11 +100,7 @@ vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "tab:→ "
 vim.opt.listchars:append "eol:↴"
 
-require("indent_blankline").setup {
-    space_char_blankline = " ",
-    show_current_context = true,
-    show_current_context_start = true,
-}
+require("ibl").setup ()
 
 local cmp = require('cmp')
 cmp.setup({
