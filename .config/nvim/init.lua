@@ -76,6 +76,7 @@ require('nvim-treesitter.configs').setup({
     "make",
     "markdown",
     "markdown_inline",
+		"php",
     "prisma",
     "proto",
     "python",
@@ -130,9 +131,22 @@ cmp.setup({
 -- lspconfigs
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
+local lspconfigs = require('lspconfig.configs')
+
+lspconfigs.intelephense = {
+	default_config = {
+		cmd = { 'intelephense', '--stdio' };
+		filetypes = { 'php' };
+		root_dir = function(fname)
+        return vim.loop.cwd()
+		end;
+	};
+};
+
 lspconfig.cssls.setup {capabilities = capabilities}
 lspconfig.html.setup {capabilities = capabilities}
 --lspconfig.jedi_language_server.setup {capabilities = capabilities}
+lspconfig.intelephense.setup {capabilities = capabilities}
 lspconfig.jsonls.setup {capabilities = capabilities}
 lspconfig.lua_ls.setup {capabilities = capabilities}
 lspconfig.prismals.setup {capabilities = capabilities}
