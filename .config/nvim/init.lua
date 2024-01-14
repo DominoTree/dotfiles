@@ -132,6 +132,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 lspconfig.cssls.setup {capabilities = capabilities}
 lspconfig.html.setup {capabilities = capabilities}
+lspconfig.intelephense.setup {capabilities = capabilities}
 --lspconfig.jedi_language_server.setup {capabilities = capabilities}
 lspconfig.jsonls.setup {capabilities = capabilities}
 lspconfig.lua_ls.setup {capabilities = capabilities}
@@ -139,6 +140,7 @@ lspconfig.prismals.setup {capabilities = capabilities}
 lspconfig.pylsp.setup {capabilities = capabilities}
 lspconfig.rust_analyzer.setup {capabilities = capabilities}
 lspconfig.svelte.setup {capabilities = capabilities}
+lspconfig.tailwindCSS.setup {capabilities = capabilities}
 lspconfig.terraformls.setup {capabilities = capabilities}
 lspconfig.tsserver.setup {capabilities = capabilities}
 
