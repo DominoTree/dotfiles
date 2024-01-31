@@ -140,7 +140,7 @@ lspconfig.prismals.setup {capabilities = capabilities}
 lspconfig.pylsp.setup {capabilities = capabilities}
 lspconfig.rust_analyzer.setup {capabilities = capabilities}
 lspconfig.svelte.setup {capabilities = capabilities}
-lspconfig.tailwindCSS.setup {capabilities = capabilities}
+lspconfig.tailwindcss.setup {capabilities = capabilities}
 lspconfig.terraformls.setup {capabilities = capabilities}
 lspconfig.tsserver.setup {capabilities = capabilities}
 
