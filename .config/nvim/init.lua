@@ -11,6 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.g.omni_sql_no_default_maps = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
@@ -46,6 +47,7 @@ require('lazy').setup({
   {'saadparwaiz1/cmp_luasnip'},
   {'neovim/nvim-lspconfig'},
   {'hrsh7th/cmp-nvim-lsp'},
+  {'github/copilot.vim'},
 })
 
 vim.cmd("colorscheme kanagawa")
