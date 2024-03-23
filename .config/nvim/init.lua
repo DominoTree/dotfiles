@@ -31,7 +31,6 @@ require('lazy').setup({
 	{ 'nvim-treesitter/nvim-treesitter' },
 	{ 'lewis6991/gitsigns.nvim' },
 	{ 'lukas-reineke/indent-blankline.nvim' },
-	{ 'edkolev/tmuxline.vim' },
 	{ 'nvim-lualine/lualine.nvim' },
 	{ 'rebelot/kanagawa.nvim' },
 	{ 'maxmx03/solarized.nvim' },
@@ -114,7 +113,7 @@ cmp.setup({
 	snippet = {
 		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
-			require('luasnip').lsp_expand(args.body)   -- For `luasnip` users.
+			require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
 	window = {
@@ -122,11 +121,11 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	mapping = cmp.mapping.preset.insert({
-		['<CR>'] = cmp.mapping.confirm({ select = true }),   -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 	}),
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
-		{ name = 'luasnip' },   -- For luasnip users.
+		{ name = 'luasnip' }, -- For luasnip users.
 	}, {
 		{ name = 'buffer' },
 	}, {
@@ -177,6 +176,12 @@ vim.keymap.set('n', '<C-p>', telescope_builtin.find_files, {})
 vim.keymap.set('n', '<C-g>', telescope_builtin.live_grep, {})
 vim.keymap.set('n', '<C-e>', ':NvimTreeToggle<cr>', {})
 
+vim.keymap.set('n', '<leader>ga', ':!git add .<cr>', {})
+vim.keymap.set('n', '<leader>gc', ':!git commit -m ""<left>', {})
+vim.keymap.set('n', '<leader>gs', ':!git status<cr>', {})
+vim.keymap.set('n', '<leader>gu', ':!git pull<cr>', {})
+vim.keymap.set('n', '<leader>gy', ':!git push<cr>', {})
+
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -193,16 +198,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 		vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
 		vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-		vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-		vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-		vim.keymap.set('n', '<space>wl', function()
+		vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+		vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+		vim.keymap.set('n', '<leader>wl', function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, opts)
-		vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-		vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-		vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+		vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+		vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+		vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-		vim.keymap.set('n', '<space>f', function()
+		vim.keymap.set('n', '<leader>f', function()
 			vim.lsp.buf.format { async = true }
 		end, opts)
 	end,
