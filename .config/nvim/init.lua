@@ -50,6 +50,7 @@ require('lazy').setup({
 	{ 'neovim/nvim-lspconfig' },
 	{ 'hrsh7th/cmp-nvim-lsp' },
 	{ 'github/copilot.vim' },
+	{ 'justinmk/vim-sneak' },
 })
 
 vim.cmd("colorscheme solarized")
@@ -106,7 +107,7 @@ require('nvim-treesitter.configs').setup({
 
 require('ibl').setup()
 
-require('auto-dark-mode').setup()
+-- require('auto-dark-mode').setup()
 
 local cmp = require('cmp')
 cmp.setup({
@@ -181,6 +182,12 @@ vim.keymap.set('n', '<leader>gc', ':!git commit -m ""<left>', {})
 vim.keymap.set('n', '<leader>gs', ':!git status<cr>', {})
 vim.keymap.set('n', '<leader>gu', ':!git pull<cr>', {})
 vim.keymap.set('n', '<leader>gy', ':!git push<cr>', {})
+vim.keymap.set('n', '<leader>gf', ':!git diff<cr>', {})
+
+vim.keymap.set('n', '<leader>gpl', ':!gh pr list<cr>', {})
+
+vim.keymap.set('n', '<leader>cc', ':set cursorcolumn<cr>', {})
+vim.keymap.set('n', '<leader>cn', ':set nocursorcolumn<cr>', {})
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
