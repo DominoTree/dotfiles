@@ -17,7 +17,7 @@ vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappin
 vim.g.omni_sql_no_default_maps = 1
 vim.g.rustfmt_autosave = true
 vim.opt.background = 'dark'
-vim.opt.cursorcolumn = true
+-- vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
 -- vim.opt.iskeyword:remove("_")
 vim.opt.number = true
@@ -26,6 +26,8 @@ vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.updatetime = 1000
 vim.wo.signcolumn = 'yes'
+-- vim.lsp.inlay_hints = true
+vim.lsp.inlay_hint.enable()
 
 require('lazy').setup({
 	{ 'nvim-treesitter/nvim-treesitter' },
@@ -53,7 +55,7 @@ require('lazy').setup({
 	{ 'justinmk/vim-sneak' },
 })
 
-vim.cmd("colorscheme solarized")
+vim.cmd("colorscheme kanagawa")
 
 -- tree-sitter
 require('nvim-treesitter.configs').setup({
@@ -137,10 +139,11 @@ cmp.setup({
 -- lspconfigs
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
+
 lspconfig.cssls.setup { capabilities = capabilities }
 lspconfig.html.setup { capabilities = capabilities }
 lspconfig.intelephense.setup { capabilities = capabilities }
---lspconfig.jedi_language_server.setup {capabilities = capabilities}
+--lspconfig.jedi_language_server.setup { capabilities = capabilities }
 lspconfig.jsonls.setup { capabilities = capabilities }
 lspconfig.lua_ls.setup { capabilities = capabilities }
 lspconfig.prismals.setup { capabilities = capabilities }
@@ -156,6 +159,7 @@ require('mason').setup()
 require('mason-lspconfig').setup({
 	automatic_installation = true,
 })
+
 
 require('lualine').setup({})
 
