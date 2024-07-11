@@ -9,3 +9,6 @@ venv
 *.iml
 .config/nvim/plugged
 node_modules
+target
+* 2*
+*.nosync
