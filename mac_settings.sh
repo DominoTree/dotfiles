@@ -13,3 +13,6 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores true
 # defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -int 6
 # reset padding for status bar icons
 # defaults -currentHost delete -globalDomain NSStatusItemSelectionPadding
+
+# disable warnings about unsafely ejecting disks
+defaults write /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist DADisableEjectNotification -bool YES
