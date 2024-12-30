@@ -9,7 +9,9 @@ DISABLE_UPDATE_PROMPT=true
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="dieter"
+#ZSH_THEME="dstufft"
+ZSH_THEME="steeef"
+#ZSH_THEME="ys"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -17,7 +19,6 @@ ZSH_THEME="dieter"
 # looking in ~/.oh-my-zsh/themes/
 # An empty array have no effect
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -64,7 +65,21 @@ ZSH_THEME="dieter"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+	aws
+	docker
+	docker-compose
+	gh
   git
+	helm
+	iterm2
+	kubectl
+	npm
+	pip
+	rust
+	terraform
+	virtualenv
+	yarn
+	zsh-interactive-cd
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -101,3 +116,35 @@ source $ZSH/oh-my-zsh.sh
 alias ssh="TERM=xterm-256color ssh"
 
 PATH=$PATH:/home/nprice/Apps/010editor;export PATH; # ADDED BY INSTALLER - DO NOT EDIT OR DELETE THIS COMMENT - 87FF8EFC-483D-BCAA-D67D-735CF60410D1 658FA222-FDC3-EE26-6BC1-623299246C8B
+
+cowsay `fortune`
+echo ""
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+export PKG_CONFIG_PATH="$(brew --prefix)/opt/libarchive/lib/pkgconfig";
+export AWS_PROFILE="production-developer";
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+with-aws-creds() {
+    (
+        $(sso-utils print-aws-creds)
+        "$@"
+    )
+}
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="${HOME}/.local/bin:${PATH}"
+# TODO: remove below .rd/bin line after fix is released and you brew upgrade rancher  https://github.com/rancher-sandbox/rancher-desktop/issues/7315
+export PATH="${HOME}/.rd/bin:${PATH}";
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/nick.price/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
