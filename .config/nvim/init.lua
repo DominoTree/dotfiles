@@ -17,6 +17,7 @@ vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappin
 vim.g.omni_sql_no_default_maps = 1
 vim.g.rustfmt_autosave = true
 vim.opt.background = 'dark'
+vim.opt.expandtab = true
 -- vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
 -- vim.opt.iskeyword:remove("_")
@@ -51,7 +52,7 @@ require('lazy').setup({
 	{ 'saadparwaiz1/cmp_luasnip' },
 	{ 'neovim/nvim-lspconfig' },
 	{ 'hrsh7th/cmp-nvim-lsp' },
-	{ 'github/copilot.vim' },
+	-- { 'github/copilot.vim' },
 	{ 'justinmk/vim-sneak' },
 })
 
@@ -146,6 +147,7 @@ lspconfig.intelephense.setup { capabilities = capabilities }
 --lspconfig.jedi_language_server.setup { capabilities = capabilities }
 lspconfig.jsonls.setup { capabilities = capabilities }
 lspconfig.lua_ls.setup { capabilities = capabilities }
+lspconfig.m68k.setup { capabilities = capabilities }
 lspconfig.prismals.setup { capabilities = capabilities }
 lspconfig.pylsp.setup { capabilities = capabilities }
 lspconfig.rust_analyzer.setup { capabilities = capabilities }
@@ -218,7 +220,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
 		vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-		vim.keymap.set('n', '<leader>f', function()
+		vim.keymap.set('n', '<leader>ff', function()
 			vim.lsp.buf.format { async = true }
 		end, opts)
 	end,
