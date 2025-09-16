@@ -16,7 +16,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.omni_sql_no_default_maps = 1
 vim.g.rustfmt_autosave = true
-vim.opt.background = 'dark'
+vim.opt.background = 'light'
 vim.opt.expandtab = true
 -- vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
@@ -56,7 +56,8 @@ require('lazy').setup({
 	{ 'justinmk/vim-sneak' },
 })
 
-vim.cmd("colorscheme kanagawa")
+-- vim.cmd("colorscheme kanagawa")
+vim.cmd("colorscheme vim")
 
 -- tree-sitter
 require('nvim-treesitter.configs').setup({
@@ -194,6 +195,14 @@ vim.keymap.set('n', '<leader>gpl', ':!gh pr list<cr>', {})
 
 vim.keymap.set('n', '<leader>cc', ':set cursorcolumn<cr>', {})
 vim.keymap.set('n', '<leader>cn', ':set nocursorcolumn<cr>', {})
+
+
+vim.api.nvim_create_autocmd('BufRead', {
+  pattern = { "*.hujson" },
+  callback = function()
+    vim.opt.filetype = "jsonc"
+  end
+})
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
