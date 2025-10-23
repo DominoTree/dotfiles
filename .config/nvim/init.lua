@@ -16,7 +16,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.omni_sql_no_default_maps = 1
 vim.g.rustfmt_autosave = true
-vim.opt.background = 'light'
+vim.opt.background = 'dark'
 vim.opt.expandtab = true
 -- vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
@@ -33,6 +33,7 @@ vim.lsp.inlay_hint.enable()
 require('lazy').setup({
 	{ 'nvim-treesitter/nvim-treesitter' },
 	{ 'lewis6991/gitsigns.nvim' },
+  { 'sphamba/smear-cursor.nvim' },
 	{ 'lukas-reineke/indent-blankline.nvim' },
 	{ 'nvim-lualine/lualine.nvim' },
 	{ 'rebelot/kanagawa.nvim' },
@@ -56,8 +57,8 @@ require('lazy').setup({
 	{ 'justinmk/vim-sneak' },
 })
 
--- vim.cmd("colorscheme kanagawa")
-vim.cmd("colorscheme vim")
+vim.cmd("colorscheme kanagawa")
+-- vim.cmd("colorscheme vim")
 
 -- tree-sitter
 require('nvim-treesitter.configs').setup({
@@ -111,6 +112,8 @@ require('nvim-treesitter.configs').setup({
 
 require('ibl').setup()
 
+require('smear_cursor').enabled = true
+
 -- require('auto-dark-mode').setup()
 
 local cmp = require('cmp')
@@ -140,22 +143,22 @@ cmp.setup({
 
 -- lspconfigs
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local lspconfig = require('lspconfig')
+-- local lspconfig = require('lspconfig')
 
-lspconfig.cssls.setup { capabilities = capabilities }
-lspconfig.html.setup { capabilities = capabilities }
-lspconfig.intelephense.setup { capabilities = capabilities }
---lspconfig.jedi_language_server.setup { capabilities = capabilities }
-lspconfig.jsonls.setup { capabilities = capabilities }
-lspconfig.lua_ls.setup { capabilities = capabilities }
-lspconfig.m68k.setup { capabilities = capabilities }
-lspconfig.prismals.setup { capabilities = capabilities }
-lspconfig.pylsp.setup { capabilities = capabilities }
-lspconfig.rust_analyzer.setup { capabilities = capabilities }
-lspconfig.svelte.setup { capabilities = capabilities }
-lspconfig.tailwindcss.setup { capabilities = capabilities }
-lspconfig.terraformls.setup { capabilities = capabilities }
-lspconfig.ts_ls.setup { capabilities = capabilities }
+vim.lsp.config["cssls"] = { capabilities = capabilities }
+vim.lsp.config["html"] = { capabilities = capabilities }
+vim.lsp.config["intelephense"] = { capabilities = capabilities }
+-- vim.lsp.config["jedi_language_server"] = { capabilities = capabilities }
+vim.lsp.config["jsonls"] = { capabilities = capabilities }
+vim.lsp.config["lua_ls"] = { capabilities = capabilities }
+vim.lsp.config["m68k"] = { capabilities = capabilities }
+vim.lsp.config["prismals"] = { capabilities = capabilities }
+vim.lsp.config["pylsp"] = { capabilities = capabilities }
+vim.lsp.config["rust_analyzer"] = { capabilities = capabilities }
+vim.lsp.config["svelte"] = { capabilities = capabilities }
+vim.lsp.config["tailwindcss"] = { capabilities = capabilities }
+vim.lsp.config["terraformls"] = { capabilities = capabilities }
+vim.lsp.config["ts_ls"] = { capabilities = capabilities }
 
 -- install and update language servers
 require('mason').setup()
