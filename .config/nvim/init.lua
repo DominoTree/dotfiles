@@ -53,8 +53,19 @@ require('lazy').setup({
 	{ 'saadparwaiz1/cmp_luasnip' },
 	{ 'neovim/nvim-lspconfig' },
 	{ 'hrsh7th/cmp-nvim-lsp' },
+  { 'stevearc/conform.nvim' },
 	-- { 'github/copilot.vim' },
 	{ 'justinmk/vim-sneak' },
+  {'mfussenegger/nvim-dap',
+    -- event = "VeryLazy",
+    dependencies = {
+        "rcarriga/nvim-dap-ui",
+        "nvim-neotest/nvim-nio",
+        "jay-babu/mason-nvim-dap.nvim",
+        "theHamsta/nvim-dap-virtual-text",
+    },
+},
+
 })
 
 vim.cmd("colorscheme kanagawa")
@@ -162,10 +173,75 @@ vim.lsp.config["ts_ls"] = { capabilities = capabilities }
 
 -- install and update language servers
 require('mason').setup()
+
 require('mason-lspconfig').setup({
 	automatic_installation = true,
 })
 
+require("conform").setup({
+  formatters_by_ft = {
+    go = { "gofmt" },
+  },
+})
+
+local mason_dap = require("mason-nvim-dap")
+local dap = require("dap")
+local ui = require("dapui")
+local dap_virtual_text = require("nvim-dap-virtual-text")
+
+-- Dap Virtual Text
+dap_virtual_text.setup()
+
+mason_dap.setup({
+	ensure_installed = { "delve" },
+	automatic_installation = true,
+	handlers = {
+		function(config)
+			require("mason-nvim-dap").default_setup(config)
+		end,
+	},
+})
+
+dap.configurations = {
+	go = {
+		{
+			type = "delve",
+			name = "Debug",
+			request = "launch",
+			program = "${file}",
+		},
+		{
+			type = "delve",
+			name = "Debug test", -- configuration for debugging test files
+			request = "launch",
+			mode = "test",
+			program = "${file}",
+		},
+		-- works with go.mod packages and sub packages
+		{
+			type = "delve",
+			name = "Debug test (go.mod)",
+			request = "launch",
+			mode = "test",
+			program = "./${relativeFileDirname}",
+		},
+	},
+}
+
+ui.setup()
+
+dap.listeners.before.attach.dapui_config = function()
+	ui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+	ui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+	ui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+	ui.close()
+end
 
 require('lualine').setup({})
 
@@ -207,6 +283,13 @@ vim.api.nvim_create_autocmd('BufRead', {
   end
 })
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end,
+})
+
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -241,3 +324,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 vim.api.nvim_create_autocmd("CursorHold", {
 	callback = function() vim.diagnostic.open_float() end
 })
+
+vim.keymap.set('n', '<leader>dt', require("dap").toggle_breakpoint, {})
+vim.keymap.set('n', '<leader>di', require("dap").step_into, {})
+vim.keymap.set('n', '<leader>dc', require("dap").continue, {})
+vim.keymap.set('n', '<leader>dl', require("dap").run_last, {})
+vim.keymap.set('n', '<leader>dq', function() 
+  require("dap").terminate()
+  require("dapui").close()
+  require("nvim-dap-virtual-text").toggle()
+end, {}) 
