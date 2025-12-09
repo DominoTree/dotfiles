@@ -1,7 +1,7 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=10000000
-setopt nomatch notify ksh_arrays
+setopt ksh_arrays nomatch notify share_history
 unsetopt autocd beep extendedglob
 bindkey -e
 
@@ -19,5 +19,3 @@ export EDITOR=nvim
 PS1="%n@%m %1~ %# "
 
 alias ls="ls --color"
-
-PS1="%n@%m %1~ %# "
