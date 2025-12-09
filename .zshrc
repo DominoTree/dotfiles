@@ -29,6 +29,7 @@ bindkey "^[[3~" delete-char                       # delete
 bindkey "^[[H"  beginning-of-line                 # home
 bindkey "^[[F"  end-of-line                       # end
 
+# these can just be remapped in tmux too :shrug:
 bindkey "^[[1~"  beginning-of-line                 # home (tmux)
 bindkey "^[[4~"  end-of-line                       # end (tmux)
 
@@ -36,7 +37,7 @@ export PATH=/opt/homebrew/bin:$PATH
 
 export EDITOR=nvim
 
-PS1="%n@%m %1~ %# "
+PS1="[%*] %B%n%b@%F{4}%m%f:%F{2}%2~%f %# "
 
 # force blinking block even after apps unset it
 precmd() {
@@ -44,5 +45,3 @@ precmd() {
 }
 
 alias ls="ls --color"
-
-cd
