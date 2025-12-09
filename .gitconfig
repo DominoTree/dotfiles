@@ -6,7 +6,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
 [pull]
-	rebase = false
+	rebase = true
 [init]
 	defaultBranch = main
 [submodule]
