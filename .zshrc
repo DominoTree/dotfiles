@@ -33,3 +33,5 @@ export EDITOR=nvim
 PS1="%n@%m %1~ %# "
 
 alias ls="ls --color"
+
+cd
