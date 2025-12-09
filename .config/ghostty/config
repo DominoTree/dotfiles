@@ -1,0 +1,16 @@
+shell-integration-features = no-cursor
+cursor-style = block
+cursor-style-blink = true
+
+font-family = "BerkeleyMono Nerd Font"
+#font-family = "gallant12x22"
+font-size = 16
+#font-size = 22
+theme = "Builtin Solarized Dark"
+#theme = "Builtin Solarized Light"
+#theme = "Builtin Tango Light"
+
+# theme = "Builtin Light"
+# theme = "Adwaita"
+# theme = "Apple System Colors Light"
+# theme = "Man Page"
