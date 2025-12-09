@@ -38,6 +38,11 @@ export EDITOR=nvim
 
 PS1="%n@%m %1~ %# "
 
+# force blinking block even after apps unset it
+precmd() {
+  echo -ne '\e[1 q'
+}
+
 alias ls="ls --color"
 
 cd
