@@ -1,8 +1,22 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=10000000
-setopt ksh_arrays nomatch notify share_history
-unsetopt autocd beep extendedglob
+
+setopt ksh_arrays 
+setopt nomatch 
+setopt notify 
+
+setopt share_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+
+unsetopt autocd
+unsetopt beep 
+unsetopt extendedglob
+
 bindkey -e
 
 zstyle :compinstall filename '/Users/nprice/.zshrc'
