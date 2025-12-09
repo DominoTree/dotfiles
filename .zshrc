@@ -25,9 +25,12 @@ compinit
 
 bindkey "^[[A"  history-beginning-search-backward # up
 bindkey "^[[B"  history-beginning-search-forward  # down
+bindkey "^[[3~" delete-char                       # delete
 bindkey "^[[H"  beginning-of-line                 # home
 bindkey "^[[F"  end-of-line                       # end
-bindkey "^[[3~" delete-char                       # delete
+
+bindkey "^[[1~"  beginning-of-line                 # home (tmux)
+bindkey "^[[4~"  end-of-line                       # end (tmux)
 
 export PATH=/opt/homebrew/bin:$PATH
 
