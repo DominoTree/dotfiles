@@ -23,8 +23,11 @@ zstyle :compinstall filename '/Users/nprice/.zshrc'
 autoload -Uz compinit
 compinit
 
-bindkey "^[[A" history-beginning-search-backward
-bindkey "^[[B" history-beginning-search-forward
+bindkey "^[[A"  history-beginning-search-backward # up
+bindkey "^[[B"  history-beginning-search-forward  # down
+bindkey "^[[H"  beginning-of-line                 # home
+bindkey "^[[F"  end-of-line                       # end
+bindkey "^[[3~" delete-char                       # delete
 
 export PATH=/opt/homebrew/bin:$PATH
 
