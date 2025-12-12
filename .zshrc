@@ -45,3 +45,7 @@ precmd() {
 }
 
 alias ls="ls --color"
+
+if [[ $TERM -eq "xterm-ghostty" ]]; then
+  export TERM=xterm-256color
+fi
