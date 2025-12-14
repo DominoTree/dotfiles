@@ -1,3 +1,4 @@
+#!/usr/local/bin/zsh
 HISTFILE=~/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=10000000
@@ -46,6 +47,6 @@ precmd() {
 
 alias ls="ls --color"
 
-if [[ $TERM -eq "xterm-ghostty" ]]; then
+if [[ $TERM = "xterm-ghostty" ]]; then
   export TERM=xterm-256color
 fi
