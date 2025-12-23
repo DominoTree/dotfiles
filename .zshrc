@@ -24,8 +24,10 @@ zstyle :compinstall filename '/Users/nprice/.zshrc'
 autoload -Uz compinit
 compinit
 
-bindkey "^[[A"  history-search-backward # up
-bindkey "^[[B"  history-search-forward  # down
+#bindkey "^[[A"  history-search-backward # up
+#bindkey "^[[B"  history-search-forward  # down
+bindkey "^[[A"  history-beginning-search-backward # up
+bindkey "^[[B"  history-beginning-search-forward  # down
 bindkey "^[[3~" delete-char             # delete
 bindkey "^[[H"  beginning-of-line       # home
 bindkey "^[[F"  end-of-line             # end
