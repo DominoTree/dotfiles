@@ -45,14 +45,7 @@ require('lazy').setup({
 	{ 'nvim-telescope/telescope.nvim' },
 	{ 'williamboman/mason.nvim',            run = ':MasonUpdate' },
 	{ 'williamboman/mason-lspconfig.nvim' },
-	{ 'hrsh7th/cmp-buffer' },
-	{ 'hrsh7th/cmp-path' },
-	{ 'hrsh7th/cmp-cmdline' },
-	{ 'hrsh7th/nvim-cmp' },
-	{ 'L3MON4D3/LuaSnip' },
-	{ 'saadparwaiz1/cmp_luasnip' },
 	{ 'neovim/nvim-lspconfig' },
-	{ 'hrsh7th/cmp-nvim-lsp' },
   { 'stevearc/conform.nvim' },
 	-- { 'github/copilot.vim' },
 	{ 'justinmk/vim-sneak' },
@@ -64,7 +57,29 @@ require('lazy').setup({
         "jay-babu/mason-nvim-dap.nvim",
         "theHamsta/nvim-dap-virtual-text",
     },
-},
+  },
+{
+    'saghen/blink.cmp',
+    -- use a release tag to download pre-built binaries
+    version = '1.*',
+    opts = {
+      keymap = { preset = 'enter' },
+
+      completion = { documentation = { auto_show = true } },
+
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
+
+      -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
+      -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+      -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+      --
+      -- See the fuzzy documentation for more information
+      fuzzy = { implementation = "prefer_rust_with_warning" }
+    },
+    opts_extend = { "sources.default" }
+  }
 
 })
 
@@ -127,49 +142,8 @@ require('smear_cursor').enabled = true
 
 -- require('auto-dark-mode').setup()
 
-local cmp = require('cmp')
-cmp.setup({
-	snippet = {
-		-- REQUIRED - you must specify a snippet engine
-		expand = function(args)
-			require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-		end,
-	},
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
-	},
-	mapping = cmp.mapping.preset.insert({
-		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-	}),
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-		{ name = 'luasnip' }, -- For luasnip users.
-	}, {
-		{ name = 'buffer' },
-	}, {
-		{ name = 'path' },
-	})
-})
-
 -- lspconfigs
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- local lspconfig = require('lspconfig')
-
-vim.lsp.config["cssls"] = { capabilities = capabilities }
-vim.lsp.config["html"] = { capabilities = capabilities }
-vim.lsp.config["intelephense"] = { capabilities = capabilities }
--- vim.lsp.config["jedi_language_server"] = { capabilities = capabilities }
-vim.lsp.config["jsonls"] = { capabilities = capabilities }
-vim.lsp.config["lua_ls"] = { capabilities = capabilities }
-vim.lsp.config["m68k"] = { capabilities = capabilities }
-vim.lsp.config["prismals"] = { capabilities = capabilities }
-vim.lsp.config["pylsp"] = { capabilities = capabilities }
-vim.lsp.config["rust_analyzer"] = { capabilities = capabilities }
-vim.lsp.config["svelte"] = { capabilities = capabilities }
-vim.lsp.config["tailwindcss"] = { capabilities = capabilities }
-vim.lsp.config["terraformls"] = { capabilities = capabilities }
-vim.lsp.config["ts_ls"] = { capabilities = capabilities }
 
 -- install and update language servers
 require('mason').setup()
