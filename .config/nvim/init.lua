@@ -45,11 +45,10 @@ require('lazy').setup({
 	{ 'nvim-telescope/telescope.nvim' },
 	{ 'williamboman/mason.nvim',            run = ':MasonUpdate' },
 	{ 'williamboman/mason-lspconfig.nvim' },
-	{ 'neovim/nvim-lspconfig' },
   { 'stevearc/conform.nvim' },
 	-- { 'github/copilot.vim' },
 	{ 'justinmk/vim-sneak' },
-  {'mfussenegger/nvim-dap',
+  { 'mfussenegger/nvim-dap',
     -- event = "VeryLazy",
     dependencies = {
         "rcarriga/nvim-dap-ui",
@@ -58,10 +57,27 @@ require('lazy').setup({
         "theHamsta/nvim-dap-virtual-text",
     },
   },
-{
+	{ 'neovim/nvim-lspconfig' ,
+    opts = {
+      servers = {
+        rust_analyzer = {}
+      }
+    },
+    config = function(_, opts)
+      -- local lspconfig = require('lspconfig')
+      for server, config in pairs(opts.servers) do
+        -- passing config.capabilities to blink.cmp merges with the capabilities in your
+        -- `opts[server].capabilities, if you've defined it
+        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+        vim.lsp.config[server] = config
+      end
+    end
+  },
+  {
     'saghen/blink.cmp',
     -- use a release tag to download pre-built binaries
-    version = '1.*',
+    version = '*',
+    build = 'cargo +nightly build --release',
     opts = {
       keymap = { preset = 'enter' },
 
@@ -76,9 +92,13 @@ require('lazy').setup({
       -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
       --
       -- See the fuzzy documentation for more information
-      fuzzy = { implementation = "prefer_rust_with_warning" }
+      fuzzy = { 
+        prebuilt_binaries = { download = false },
+        -- implementation = "prefer_rust_with_warning"
+        implementation = "rust"
+      }
     },
-    opts_extend = { "sources.default" }
+    opts_extend = { "sources.default" },
   }
 
 })
@@ -144,7 +164,8 @@ require('smear_cursor').enabled = true
 
 -- lspconfigs
 -- local lspconfig = require('lspconfig')
-
+--
+-- 
 -- install and update language servers
 require('mason').setup()
 
