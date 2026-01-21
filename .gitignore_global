@@ -14,3 +14,5 @@ target
 *.nosync
 *.lck
 *-backups
+.claude
+planfile
