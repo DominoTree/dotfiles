@@ -1,3 +1,11 @@
+{{ if eq .chezmoi.os "freebsd" -}}
+# Ghostty configuration
+
+theme = iTerm2 Solarized Dark
+
+font-family = JetBrainsMono Nerd Font
+font-size = 10
+{{ else -}}
 shell-integration-features = no-cursor
 cursor-style = block
 cursor-style-blink = true
@@ -14,3 +22,4 @@ theme = "Builtin Solarized Dark"
 # theme = "Adwaita"
 # theme = "Apple System Colors Light"
 # theme = "Man Page"
+{{ end -}}

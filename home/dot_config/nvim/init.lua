@@ -31,7 +31,7 @@ vim.wo.signcolumn = 'yes'
 vim.lsp.inlay_hint.enable()
 
 require('lazy').setup({
-	{ 'nvim-treesitter/nvim-treesitter' },
+	{ 'nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate' },
 	{ 'lewis6991/gitsigns.nvim' },
   { 'sphamba/smear-cursor.nvim' },
 	{ 'lukas-reineke/indent-blankline.nvim' },
@@ -46,8 +46,14 @@ require('lazy').setup({
 	{ 'williamboman/mason.nvim',            run = ':MasonUpdate' },
 	{ 'williamboman/mason-lspconfig.nvim' },
   { 'stevearc/conform.nvim' },
+  { 'mfussenegger/nvim-lint' },
 	-- { 'github/copilot.vim' },
 	{ 'justinmk/vim-sneak' },
+  { 'coder/claudecode.nvim',
+    opts = {
+      terminal = { provider = 'native', split_width_percentage = 0.4 },
+    },
+  },
   { 'mfussenegger/nvim-dap',
     -- event = "VeryLazy",
     dependencies = {
@@ -106,49 +112,52 @@ require('lazy').setup({
 vim.cmd("colorscheme kanagawa")
 -- vim.cmd("colorscheme vim")
 
--- tree-sitter
-require('nvim-treesitter.configs').setup({
-	auto_install = true,
-	ensure_installed = {
-		"arduino",
-		"bash",
-		"c",
-		"cmake",
-		"cpp",
-		"css",
-		"git_config",
-		"git_rebase",
-		"gitcommit",
-		"gitignore",
-		"gomod",
-		"gosum",
-		"go",
-		"html",
-		"http",
-		"ini",
-		"javascript",
-		"json",
-		"lua",
-		"make",
-		"markdown",
-		"markdown_inline",
-		"prisma",
-		"proto",
-		"python",
-		"regex",
-		"rust",
-		"scss",
-		"sql",
-		"svelte",
-		"terraform",
-		"toml",
-		"typescript",
-		"vim",
-		"yaml",
-	},
-	highlight = {
-		enable = true,
-	},
+-- tree-sitter (nvim-treesitter `main` branch API; `master` is incompatible with Neovim 0.12+)
+require('nvim-treesitter').install({
+	"arduino",
+	"bash",
+	"c",
+	"cmake",
+	"cpp",
+	"css",
+	"git_config",
+	"git_rebase",
+	"gitcommit",
+	"gitignore",
+	"gomod",
+	"gosum",
+	"go",
+	"html",
+	"http",
+	"ini",
+	"javascript",
+	"json",
+	"lua",
+	"make",
+	"markdown",
+	"markdown_inline",
+	"prisma",
+	"proto",
+	"python",
+	"regex",
+	"rust",
+	"scss",
+	"sql",
+	"svelte",
+	"terraform",
+	"toml",
+	"typescript",
+	"vim",
+	"yaml",
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+	callback = function(args)
+		local lang = vim.treesitter.language.get_lang(args.match) or args.match
+		if vim.treesitter.language.add(lang) then
+			pcall(vim.treesitter.start, args.buf, lang)
+		end
+	end,
 })
 
 -- vim.opt.list = true
@@ -178,6 +187,13 @@ require("conform").setup({
     go = { "gofmt" },
     terraform = { "terraform_fmt" },
   },
+})
+
+-- linters that aren't language servers; some read the file from disk, so lint after writes
+local lint = require('lint')
+lint.linters_by_ft = {}
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
+  callback = function() lint.try_lint() end,
 })
 
 local mason_dap = require("mason-nvim-dap")
@@ -268,6 +284,30 @@ vim.keymap.set('n', '<leader>gf', ':!git diff<cr>', {})
 
 vim.keymap.set('n', '<leader>gpl', ':!gh pr list<cr>', {})
 
+vim.keymap.set({ 'n', 't' }, '<C-,>', '<cmd>ClaudeCodeFocus<cr>', {})
+
+-- toggleable shell terminal: open/focus, or hide if already focused
+local shell_term = { buf = nil, win = nil }
+vim.keymap.set({ 'n', 't' }, '<C-.>', function()
+  if shell_term.win and vim.api.nvim_win_is_valid(shell_term.win) then
+    if vim.api.nvim_get_current_win() == shell_term.win then
+      vim.api.nvim_win_hide(shell_term.win)
+      return
+    end
+    vim.api.nvim_set_current_win(shell_term.win)
+  else
+    vim.cmd('botright ' .. math.floor(vim.o.lines * 0.3) .. 'split')
+    shell_term.win = vim.api.nvim_get_current_win()
+    if shell_term.buf and vim.api.nvim_buf_is_valid(shell_term.buf) then
+      vim.api.nvim_win_set_buf(shell_term.win, shell_term.buf)
+    else
+      vim.cmd.terminal()
+      shell_term.buf = vim.api.nvim_get_current_buf()
+      vim.bo[shell_term.buf].buflisted = false
+    end
+  end
+  vim.cmd.startinsert()
+end, {})
 vim.keymap.set('n', '<leader>cc', ':set cursorcolumn<cr>', {})
 vim.keymap.set('n', '<leader>cn', ':set nocursorcolumn<cr>', {})
 

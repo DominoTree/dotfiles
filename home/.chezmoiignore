@@ -1,0 +1,6 @@
+{{ if ne .chezmoi.os "linux" -}}
+.config/hypr
+{{ end -}}
+{{ if eq .chezmoi.os "darwin" -}}
+.config/waybar
+{{ end -}}

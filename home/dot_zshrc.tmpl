@@ -1,0 +1,98 @@
+#!/usr/local/bin/zsh
+HISTFILE=~/.zsh_history
+HISTSIZE=10000000
+SAVEHIST=10000000
+
+setopt ksh_arrays 
+setopt nomatch 
+setopt notify 
+
+setopt share_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+
+unsetopt autocd
+unsetopt beep 
+unsetopt extendedglob
+
+bindkey -e
+
+zstyle :compinstall filename '/Users/nprice/.zshrc'
+autoload -Uz compinit
+compinit
+
+# ghostty's terminfo is missing kend, and this has to happen before the
+# terminfo lookups below
+if [[ $TERM = "xterm-ghostty" ]]; then
+  export TERM=xterm-256color
+fi
+
+# ZLE puts the terminal in application cursor mode (smkx) while the line editor
+# is active, so keys arrive as the terminfo sequence (ESC O A) rather than the
+# raw CSI form (ESC [ A). Bind both, skipping capabilities this terminfo lacks.
+zmodload zsh/terminfo
+
+bindkey-seqs() {
+  local widget=$1 seq
+  shift
+  for seq in "$@"; do
+    [[ -n $seq ]] && bindkey "$seq" "$widget"
+  done
+  return 0
+}
+
+# the ^[[1~ / ^[[4~ forms are what tmux sends for home/end
+bindkey-seqs history-beginning-search-backward "${terminfo[kcuu1]}" "^[[A"          # up
+bindkey-seqs history-beginning-search-forward  "${terminfo[kcud1]}" "^[[B"          # down
+bindkey-seqs delete-char                       "${terminfo[kdch1]}" "^[[3~"         # delete
+bindkey-seqs beginning-of-line                 "${terminfo[khome]}" "^[[H" "^[[1~"  # home
+bindkey-seqs end-of-line                       "${terminfo[kend]}"  "^[[F" "^[[4~"  # end
+
+unfunction bindkey-seqs
+
+{{ if eq .chezmoi.os "freebsd" -}}
+export PATH=~/.local/bin:/opt/homebrew/bin:/usr/local/llvm21/bin:$PATH
+{{- else -}}
+export PATH=/opt/homebrew/bin:$PATH
+{{- end }}
+
+export EDITOR=nvim
+export COLORTERM=truecolor
+{{- if eq .chezmoi.os "freebsd" }}
+
+export RG_PATH=/usr/local/bin/rg
+{{- end }}
+
+PS1="[%*] %B%n%b@%F{4}%m%f:%F{2}%2~%f %# "
+
+# force blinking block even after apps unset it
+precmd() {
+  echo -ne '\e[1 q'
+  # clear leftover mouse-reporting modes left on by a TUI/tmux client
+  # that died on abrupt SSH disconnect (e.g. laptop powered off)
+  echo -ne '\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?1007l'
+}
+
+alias ls="ls --color"
+{{- if eq .chezmoi.os "darwin" }}
+
+alias gam="/Users/nprice/bin/gam7/gam"
+{{- end }}
+{{- if eq .chezmoi.os "freebsd" }}
+
+alias codex="codex --sandbox danger-full-access --ask-for-approval on-request"
+
+#alias claude="node --require /home/nprice/Work/clod/bun-shim.cjs /home/nprice/Work/clod/cli.node.cjs"
+#
+alias grf="git fetch origin && git reset --hard @{u}"
+
+source ~/.cargo/env
+
+alias scratch="doas jexec -l -U nprice scratch"
+
+# opencode
+export PATH=/home/nprice/.opencode/bin:$PATH
+{{- end }}
