@@ -31,7 +31,7 @@ vim.wo.signcolumn = 'yes'
 vim.lsp.inlay_hint.enable()
 
 require('lazy').setup({
-	{ 'nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate' },
+	{ 'nvim-treesitter/nvim-treesitter', branch = 'main', lazy = false, build = ':TSUpdate' },
 	{ 'lewis6991/gitsigns.nvim' },
   { 'sphamba/smear-cursor.nvim' },
 	{ 'lukas-reineke/indent-blankline.nvim' },
@@ -132,6 +132,7 @@ require('nvim-treesitter').install({
 	"ini",
 	"javascript",
 	"json",
+	"liquid",
 	"lua",
 	"make",
 	"markdown",
@@ -182,10 +183,18 @@ require('mason-lspconfig').setup({
 	automatic_installation = true,
 })
 
+-- attach html-lsp to Liquid templates (Eleventy) as well as plain HTML
+vim.lsp.config('html', { filetypes = { 'html', 'liquid' } })
+
 require("conform").setup({
   formatters_by_ft = {
     go = { "gofmt" },
     terraform = { "terraform_fmt" },
+    javascript = { "prettier" },
+    css = { "prettier" },
+    json = { "prettier" },
+    -- needs @shopify/prettier-plugin-liquid in the project's .prettierrc
+    liquid = { "prettier" },
   },
 })
 
@@ -351,8 +360,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
 		vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+		-- same formatter as on save (conform); LSP only if conform has none for this filetype
 		vim.keymap.set('n', '<leader>ff', function()
-			vim.lsp.buf.format { async = true }
+			require('conform').format({ async = true, lsp_format = 'fallback' })
 		end, opts)
 	end,
 })

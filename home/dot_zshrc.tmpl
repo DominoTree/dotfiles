@@ -56,7 +56,7 @@ unfunction bindkey-seqs
 {{ if eq .chezmoi.os "freebsd" -}}
 export PATH=~/.local/bin:/opt/homebrew/bin:/usr/local/llvm21/bin:$PATH
 {{- else -}}
-export PATH=/opt/homebrew/bin:$PATH
+export PATH=~/.local/bin:/opt/homebrew/sbin:/opt/homebrew/bin:$PATH
 {{- end }}
 
 export EDITOR=nvim
@@ -79,7 +79,7 @@ precmd() {
 alias ls="ls --color"
 {{- if eq .chezmoi.os "darwin" }}
 
-alias gam="/Users/nprice/bin/gam7/gam"
+alias gam="$HOME/bin/gam7/gam"
 {{- end }}
 {{- if eq .chezmoi.os "freebsd" }}
 
@@ -95,4 +95,11 @@ alias scratch="doas jexec -l -U nprice scratch"
 
 # opencode
 export PATH=/home/nprice/.opencode/bin:$PATH
+{{- end }}
+{{- $local := joinPath .chezmoi.homeDir ".config/chezmoi/zshrc.local" }}
+{{- if stat $local }}
+
+# host-local additions, inlined from ~/.config/chezmoi/zshrc.local (not in the
+# repo); installers like hookless and Rancher Desktop expect their blocks here
+{{ include $local | trim }}
 {{- end }}

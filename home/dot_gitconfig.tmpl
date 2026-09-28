@@ -13,6 +13,8 @@
 	recurse = true
 [push]
 	autoSetupRemote = true
+[remote "origin"]
+	prune = true
 {{- if eq .chezmoi.os "darwin" }}
 [user]
 	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDrIXSTJl9j/Mbue9XZiD0woFZOopX5D0UKR/qlLYXchdhqU8YmwXP/xVFOBcMbtE4j/mDyHkdiXhcySNlKSJrif06zLEt6alRFQRAZv7EqtdJPgxmlk7K9MM2t6p4DXZSs78SomCKQIJsQURxq/tl0G3N4UbYYxYOscbAQ0YSLwSu8EGeRQ773BtFcBvpbT/E8AOyxjnetw9QL33gl375VVMwbr0Kbyea3s3eqZ1DDKhV6oqvWHwgbuL6zXlswTGDbn7Jlph35F9xOHo6diM/6JkGoKJPJWw0p1fbKhygT72EJ0i6d2v3M4wY0NOskKJRziAWay1Ov7g4A4qH0dIB/
@@ -41,3 +43,6 @@
 [safe]
 	directory = /usr/src
 {{- end }}
+# host-local overrides (e.g. work email), not in the repo
+[include]
+	path = ~/.gitconfig.local
