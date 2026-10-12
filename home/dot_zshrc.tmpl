@@ -82,6 +82,7 @@ alias ls="ls --color"
 alias gam="$HOME/bin/gam7/gam"
 {{- end }}
 {{- if eq .chezmoi.os "freebsd" }}
+alias linux="/compat/linux/bin/bash"
 
 alias codex="codex --sandbox danger-full-access --ask-for-approval on-request"
 
