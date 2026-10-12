@@ -10,6 +10,7 @@ The canonical file is `~/Projects/dotfiles/agent-instructions/AGENTS.md`. Both `
 
 # Execution
 
+- Prefer a separate Git worktree for development so Nick can use the main checkout concurrently.
 - Batch independent reads and searches before reaching for subagents.
 - Use research subagents, when available, for substantial open-ended exploration or independent parallel tasks. Keep small edits and sequential work in one area in the main session.
 - Run independent work concurrently. Coordinate shared resources and file edits to avoid contention or conflicting changes.
@@ -53,6 +54,7 @@ The canonical file is `~/Projects/dotfiles/agent-instructions/AGENTS.md`. Both `
 - A Linux `uname` may come from the FreeBSD Linuxulator. Check `freebsd-version`, `sysctl`, and the available native toolchain before concluding that FreeBSD kernels or modules cannot be built locally.
 - For in-place regex edits, prefer `perl -i -pe`; BSD `sed` options and regex syntax differ from GNU `sed`.
 - On FreeBSD, use `doas` instead of `sudo` for privilege escalation.
+- Dotfiles are synced across hosts with chezmoi from `~/Projects/dotfiles` (source under `home/`). When editing a file listed by `chezmoi managed`, make the same change in the chezmoi source. Check `chezmoi diff` first; live files can drift from the source, so do not blindly apply over them.
 - Ask before installing additional tooling, preferably through the system package manager. Exception: in the FreeBSD `scratch` jail, installing tooling needed for the task from any source is already authorized.
 - Available CLIs include `gh`, `aws`, `gcloud`, and `az`. AWS profiles are in `~/.aws/config`; prefer the `AWSAdministratorAccess` role.
 - On the configured FreeBSD hosts, jails are at `/usr/local/jails/containers/`, configs at `/usr/local/etc/jail.conf.d/`, and persistent stores at `/usr/local/jails/data`. Jails are ephemeral. Unprivileged sessions cannot access jails or see other users' processes.
