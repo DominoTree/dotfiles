@@ -1,0 +1,3 @@
+# Reap detached mosh-servers; pkill -USR1 mosh-server spares live ones.
+export MOSH_SERVER_NETWORK_TMOUT=86400
+export MOSH_SERVER_SIGNAL_TMOUT=300
