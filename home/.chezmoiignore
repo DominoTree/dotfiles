@@ -2,3 +2,6 @@
 .config/hypr
 .config/waybar
 {{ end -}}
+{{ if not (stat (joinPath .chezmoi.sourceDir (printf ".htoprc_%s" .chezmoi.os))) -}}
+.config/htop
+{{ end -}}
