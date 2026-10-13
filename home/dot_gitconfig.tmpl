@@ -1,5 +1,13 @@
 [credential]
 	helper = store
+{{- with lookPath "gh" }}
+[credential "https://github.com"]
+	helper =
+	helper = !{{ . }} auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !{{ . }} auth git-credential
+{{- end }}
 [user]
 	name = Nick Price
 	email = nick@spun.io
