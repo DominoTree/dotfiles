@@ -74,6 +74,8 @@ precmd() {
   # clear leftover mouse-reporting modes left on by a TUI/tmux client
   # that died on abrupt SSH disconnect (e.g. laptop powered off)
   echo -ne '\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?1007l'
+  # same for xterm modifyOtherKeys (vim enables it for TERM=xterm*)
+  echo -ne '\e[>4;0m'
 }
 
 alias ls="ls --color"
