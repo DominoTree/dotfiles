@@ -179,9 +179,7 @@ require('smear_cursor').enabled = true
 -- install and update language servers
 require('mason').setup()
 
-require('mason-lspconfig').setup({
-	automatic_installation = true,
-})
+require('mason-lspconfig').setup()
 
 -- attach html-lsp to Liquid templates (Eleventy) as well as plain HTML
 vim.lsp.config('html', { filetypes = { 'html', 'liquid' } })
