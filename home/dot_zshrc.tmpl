@@ -79,6 +79,9 @@ precmd() {
 }
 
 alias ls="ls --color"
+
+# Builds run at the lowest priority.
+make() { nice -n 20 make "$@"; }
 {{- if eq .chezmoi.os "darwin" }}
 
 alias gam="$HOME/bin/gam7/gam"
