@@ -10,7 +10,6 @@ The canonical file is `~/Projects/dotfiles/agent-instructions/AGENTS.md`. Both `
 
 # Execution
 
-- Prefer a separate Git worktree for development so Nick can use the main checkout concurrently.
 - Batch independent reads and searches before reaching for subagents.
 - Use research subagents, when available, for substantial open-ended exploration or independent parallel tasks. Keep small edits and sequential work in one area in the main session.
 - Run independent work concurrently. Coordinate shared resources and file edits to avoid contention or conflicting changes.
